@@ -44,8 +44,6 @@ def update_user_group(group_id):
     data = request.get_json()
     group = UserGroup.query.get(group_id)
    
-
-
     if group_name:
         group_name = data.get('group_name',group.group_name)
         
