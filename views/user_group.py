@@ -32,21 +32,22 @@ def get_user_group(group_id):
     else:
         return jsonify({"error":"Group not found"}), 404
     
-@user_group_bp.route('/delete-user_group/<int:group_id>', methods=['DELETE'])
+@user_group_bp.route('/delete_user_group/<int:group_id>', methods=['DELETE'])
 def delete_user_group(group_id):
     group = UserGroup.query.get(group_id)
     db.session.delete(group)
     db.session.commit()
     return jsonify({"success":"Group deleted successfully"}), 200
 
-@user_group_bp.route('/update-user_group/<int:group_id>', methods=['PATCH'])
+@user_group_bp.route('/update_user_group/<int:group_id>', methods=['PUT'])
 def update_user_group(group_id):
-    group = UserGroup.query.get(group_id)
     data = request.get_json()
-    group_name = data.get('group_name')
+    group = UserGroup.query.get(group_id)
+   
+
 
     if group_name:
-        group.group_name = group_name
+        group_name = data.get('group_name',group.group_name)
         
         check_group = UserGroup.query.filter_by(group_name=group_name).first()
 

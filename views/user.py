@@ -44,15 +44,13 @@ def delete_user(user_id):
     return jsonify({"success":"User deleted successfully"}), 200
 
 
-@user_bp.route('/update_user/<int:user_id>', methods=['PATCH'])
+@user_bp.route('/update_user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     user = User.query.get(user_id)
     data = request.get_json()
     username = data.get('username')
 
     if username:
-        user.username = username
-        
         check_username = User.query.filter_by(username=username).first()
 
         if check_username and check_username.id != user_id:
